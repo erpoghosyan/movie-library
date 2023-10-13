@@ -58,14 +58,6 @@ class MovieListView(ListView):
     model = Movie
     template_name = "movie_list.html"
 
-class MovieDetailView(DetailView):
-    model = Movie
-    template_name = "movie_detail.html"
-    def get_context_data(self, **kwargs): 
-        context = super().get_context_data(**kwargs) 
-        context['form'] = CommentForm()
-        return context
-
 class MovieUpdateView(UpdateView): 
     model = Movie
     fields = (

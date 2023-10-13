@@ -8,7 +8,7 @@ from .views import (HomePageView,
                     MovieCreateView,
                     )
 urlpatterns = [
-    path("", HomePageView.as_view(), name="home"),
+    path("home/", HomePageView.as_view(), name="home"),
     path("signup/", SignUpView.as_view(), name="signup"),
     path("<int:pk>/", MovieDetailView.as_view(),
         name="movie_detail"), 

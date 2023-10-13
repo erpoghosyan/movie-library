@@ -11,16 +11,11 @@
 {{ movie.date }}</span>
 </div>
 <div class="card-body">
-<p>{{ movie.body }}</p>
-<a href="{% url 'movie_edit' movie.pk %}">Edit</a> | <a href="{% url 'movie_delete' movie.pk %}">Delete</a>
+    {{ movie.body }} </div>
+    <div class="card-footer text-center text-muted">
+        <a href="{% url 'movie_edit' movie.pk %}">Edit</a> |
+        <a href="{% url 'movie_delete' movie.pk %}">Delete</a> </div>
 </div>
-<div class="card-footer">
-    {% for comment in movie.comment_set.all %} <p>
-        <span class="font-weight-bold"> {{ comment.author }} &middot;
-        </span>
-        {{ comment }} </p>
-        {% endfor %} </div>
-    </div>
-    <br />
+<br />
 {% endfor %}
 {% endblock content %}
