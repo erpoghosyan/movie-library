@@ -4,7 +4,8 @@
 {% block content %}
 <div class="movie-entry">
 <h2>{{ object.title }}</h2>
-<p>by {{ object.author }} | {{ object.date }}</p> <p>{{ object.body }}</p>
+<p>by {{ object.author }} | {{ object.date }}</p> 
+<p>{{ object.body }}</p>
 </div>
 
 <hr>
@@ -21,5 +22,5 @@
 
 <p><a href="{% url 'movie_edit' movie.pk %}">Edit</a> |
 <a href="{% url 'movie_delete' movie.pk %}">Delete</a></p>
-<p>Back to <a href="{% url 'movie_list' %}">All Articles</a>.</p> 
+<p>Back to <a href="{% url 'movie_list' %}">All Movies</a>.</p> 
 {% endblock content %}
