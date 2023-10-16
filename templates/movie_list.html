@@ -4,6 +4,7 @@
 
 {% block content %}
 {% for movie in movie_list %}
+<a href="{% url 'movie_detail' movie.pk %}" disabled="true">
 <div class="card">
 <div class="card-header">
 <span class="font-weight-bold">{{ movie.title }}</span> &middot; 
@@ -12,10 +13,8 @@
 </div>
 <div class="card-body">
     {{ movie.body }} </div>
-    <div class="card-footer text-center text-muted">
-        <a href="{% url 'movie_edit' movie.pk %}">Edit</a> |
-        <a href="{% url 'movie_delete' movie.pk %}">Delete</a> </div>
 </div>
+</a>
 <br />
 {% endfor %}
 {% endblock content %}
