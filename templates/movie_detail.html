@@ -14,6 +14,32 @@
 {% endif %}
 </div>
 
+<br/><br/>
+<hr>
+<br/>
+<form action="{% url 'like_movie' movie.pk %}" method="POST">
+{% csrf_token %}
+{% if user.is_authenticated %}
+{% if liked %}
+<button type="submit" name="movie_id" value="{{ movie.id }}" class="btn btn-danger
+btn-sm">Unlike</button>
+{% else %}
+<button type="submit" name="movie_id" value="{{ movie.id }}" class="btn btn-primary
+btn-sm">Like</button>
+{% endif %}
+{% else %}
+<small><a href="{% url 'login' %}">Login</a>Login to like</small>
+{% endif %}
+ - {{ total_likes }}
+Likes
+</form>
+
+<hr>
+{% for comment in movie.comment_set.all %}
+<p>{{ comment.author }} &middot; {{ comment }}</p>
+{% endfor %}
+<hr>
+
 <hr>
 <h4>Comments</h4>
 {% for comment in movie.comment_set.all %}

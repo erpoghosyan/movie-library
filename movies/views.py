@@ -9,6 +9,9 @@ from .models import Movie
 from .forms import CommentForm
 from django.views import View 
 from django.views.generic import TemplateView
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
+
 
 class HomePageView(TemplateView): 
     template_name = "home.html"
@@ -45,18 +48,29 @@ class CommentPost(SingleObjectMixin, FormView):
         return reverse("movie_detail", kwargs={"pk": movie.pk})
 
 
-class MovieDetailView(LoginRequiredMixin, View): 
+class MovieDetailView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         view = CommentGet.as_view()
+        print(view, 'view')
         return view(request, *args, **kwargs)
     def post(self, request, *args, **kwargs): 
         view = CommentPost.as_view()
         return view(request, *args, **kwargs)
-
+    def get_context_data(self, **kwargs):
+        context = super(MovieDetailView, self).get_context_data(**kwargs)
+        stuff = get_object_or_404(Movie, id=self.kwargs['pk'])
+        total_likes = stuff.total_likes()
+        liked = False
+        if stuff.likes.filter(id=self.user.id).exists():
+            liked = True 
+        context['total_likes'] = total_likes
+        context["liked"] = liked
+        return context 
 
 class MovieListView(ListView): 
     model = Movie
     template_name = "movie_list.html"
+    ordering = "-date"
 
 class MovieUpdateView(UpdateView): 
     model = Movie
@@ -76,7 +90,22 @@ class MovieCreateView(CreateView):
     fields = (
         "title",
         "body",
-        "author",
-)
+        )
+    def form_valid(self, form):
+        # Set the user to the current user
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    
+def LikeView(request, pk):
+    movie = get_object_or_404(Movie, id=request.POST.get('movie_id'))
+    liked = False
+    if movie.likes.filter(id=request.user.id).exists( ):
+        movie.likes.remove(request.user)
+        liked = False 
+    else:
+        movie.likes.add(request.user )
+        liked = True
+    return HttpResponseRedirect(reverse("movie_detail", args=[str(pk)]))
+    
 
 
