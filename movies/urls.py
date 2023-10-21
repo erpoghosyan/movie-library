@@ -6,7 +6,9 @@ from .views import (HomePageView,
                     MovieUpdateView,
                     MovieDeleteView, 
                     MovieCreateView,
-                    LikeView 
+                    CommentDeleteView,
+                    CommentUpdateView,
+                    LikeView,
                     )
 urlpatterns = [
     path("home/", HomePageView.as_view(), name="home"),
@@ -21,5 +23,9 @@ urlpatterns = [
     path("", MovieListView.as_view(),
         name="movie_list"),
     path('like/<int:pk>/', LikeView, name='like_movie'),
+    path("<int:pk>/delete/comment/", CommentDeleteView.as_view(),
+        name="comment_delete"),
+    path("<int:pk>/edit/comment/", CommentUpdateView.as_view(),
+        name="comment_edit")
  ]
 

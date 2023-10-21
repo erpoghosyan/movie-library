@@ -5,11 +5,11 @@ from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import ListView, DetailView 
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy, reverse
-from .models import Movie
+from .models import Movie, Comment
 from .forms import CommentForm
 from django.views import View 
 from django.views.generic import TemplateView
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 
 
@@ -39,16 +39,34 @@ class CommentPost(SingleObjectMixin, FormView):
         self.object = self.get_object()
         return super().post(request, *args, **kwargs)
     def form_valid(self, form):
+        form.instance.author = self.request.user
         comment = form.save(commit=False) 
         comment.movie= self.object
         comment.save()
+        
         return super().form_valid(form)
     def get_success_url(self):
         movie = self.get_object()
         return reverse("movie_detail", kwargs={"pk": movie.pk})
+    
+class CommentDeleteView(DeleteView):
+    model = Comment
+    template_name = "comment_delete.html"
 
+    def get_success_url(self):
+        movie_pk = self.get_object().movie.pk
+        return reverse_lazy("movie_detail", kwargs={'pk': movie_pk})
 
-class MovieDetailView(LoginRequiredMixin, View):
+class CommentUpdateView(UpdateView):
+    model = Comment
+    fields = (
+        "comment", )
+    template_name = "comment_edit.html"
+    def get_success_url(self):
+        movie_pk = self.get_object().movie.pk
+        return reverse_lazy("movie_detail", kwargs={'pk': movie_pk})
+
+class MovieDetailView(View):
     def get(self, request, *args, **kwargs):
         view = CommentGet.as_view()
         print(view, 'view')

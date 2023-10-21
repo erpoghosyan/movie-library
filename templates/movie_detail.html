@@ -34,24 +34,25 @@ btn-sm">Like</button>
 Likes
 </form>
 
-<hr>
-{% for comment in movie.comment_set.all %}
-<p>{{ comment.author }} &middot; {{ comment }}</p>
-{% endfor %}
-<hr>
+
 
 <hr>
 <h4>Comments</h4>
 {% for comment in movie.comment_set.all %}
 <p>{{ comment.author }} &middot; {{ comment }}</p>
+{% if user.is_authenticated and user == comment.author %}
+<p><a href="{% url 'comment_edit' comment.pk %}">Edit</a> |
+    <a href="{% url 'comment_delete' comment.pk %}">Delete</a></p>
+{% endif %}
 {% endfor %}
 <hr>
 
+{% if user.is_authenticated %}
 <h4>Add a comment</h4>
 <form action="" method="post">{% csrf_token %}
     {{ form|crispy }}
 <button class="btn btn-success ml-2" type="submit">Save</button> </form>
-
+{% endif %}
 
 <p>Back to <a href="{% url 'movie_list' %}">All Movies</a>.</p> 
 {% endblock content %}
