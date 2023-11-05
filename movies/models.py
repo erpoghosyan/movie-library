@@ -3,10 +3,11 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+
 class Movie(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
-    date = models.DateTimeField(auto_now_add=True) 
+    date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -16,20 +17,23 @@ class Movie(models.Model):
     def total_likes(self):
         return self.likes.count()
 
-    def __str__(self): 
+    def __str__(self):
         return self.title
+
     def get_absolute_url(self):
         return reverse("movie_detail", kwargs={"pk": self.pk})
-    
-class Comment(models.Model): 
+
+
+class Comment(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     comment = models.CharField(max_length=140)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
-    def __str__(self): 
-        return self.comment
-    def get_absolute_url(self): 
-        return reverse("movie_list")
 
+    def __str__(self):
+        return self.comment
+
+    def get_absolute_url(self):
+        return reverse("movie_list")
