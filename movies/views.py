@@ -115,9 +115,9 @@ class MovieCreateView(CreateView):
         return super().form_valid(form)
     
 def LikeView(request, pk):
-    movie = get_object_or_404(Movie, id=request.POST.get('movie_id'))
+    movie = get_object_or_404(Movie, id=pk)
     liked = False
-    if movie.likes.filter(id=request.user.id).exists( ):
+    if movie.likes.filter(id=request.user.id).exists():
         movie.likes.remove(request.user)
         liked = False 
     else:

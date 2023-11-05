@@ -17,22 +17,21 @@
 <br/><br/>
 <hr>
 <br/>
-<form action="{% url 'like_movie' movie.pk %}" method="POST">
-{% csrf_token %}
 {% if user.is_authenticated %}
 {% if liked %}
 <button type="submit" name="movie_id" value="{{ movie.id }}" class="btn btn-danger
 btn-sm">Unlike</button>
 {% else %}
+<a href="{% url 'like_movie' movie.id %}">
 <button type="submit" name="movie_id" value="{{ movie.id }}" class="btn btn-primary
-btn-sm">Like</button>
+btn-sm">Like</button></a>
 {% endif %}
 {% else %}
 <small><a href="{% url 'login' %}">Login</a>Login to like</small>
 {% endif %}
  - {{ total_likes }}
 Likes
-</form>
+
 
 
 
