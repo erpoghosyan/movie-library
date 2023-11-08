@@ -23,15 +23,22 @@
         {% csrf_token %}
         {% if user in movie.likes.all %}
             <button type="submit" class="btn btn-danger">
-                <i class="bi bi-hand-thumbs-down"></i> Unlike ({{ movie.total_likes }})
-            </button>
+                <i class="bi bi-hand-thumbs-down"></i> Unlike</button> - {{ movie.total_likes }}
+                Likes
+            
         {% else %}
             <button type="submit" class="btn btn-primary">
-                <i class="bi bi-hand-thumbs-up"></i> Like ({{ movie.total_likes }})
-            </button>
+                <i class="bi bi-hand-thumbs-up"></i> Like </button> - {{ movie.total_likes }}
+                Likes
+            
         {% endif %}
+{% else %}
+    <small><a href="{% url 'login' %}">Login</a>
+        Login to like</small>
+        - {{ movie.total_likes }} Likes
+        {% endif %}   
     </form>
-{% endif %}
+
 
 
 
