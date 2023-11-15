@@ -1,16 +1,19 @@
+from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import UserCreationForm
+from django.db.models.query import QuerySet
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy, reverse
 from .models import Movie, Comment
-from .forms import CommentForm
+from .forms import CommentForm, MovieSearchForm
 from django.views import View
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
+
 
 
 class HomePageView(TemplateView):
@@ -78,7 +81,6 @@ class CommentUpdateView(UpdateView):
 class MovieDetailView(View):
     def get(self, request, *args, **kwargs):
         view = CommentGet.as_view()
-        print(view, 'view')
         return view(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -145,3 +147,37 @@ class MovieLikeView(LoginRequiredMixin, View):
 
         # Redirect to the same page or to the detail view of the movie
         return HttpResponseRedirect(reverse('movie_detail', args=[str(pk)]))
+    
+class MovieSearchView(ListView):
+    model = Movie
+    template_name = "movie_search_results.html"
+    context_object_name = "movies"
+    
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Movie.objects.filter(title__icontains=query).order_by('-date')
+
+
+
+# def combine_html(base_path, search_path, output_path):
+#     # Load the content of base.html
+#     with open(base_path, 'r', encoding='utf-8') as base_file:
+#         base_content = base_file.read()
+
+#     # Load the content of movie_search.html
+#     with open(search_path, 'r', encoding='utf-8') as search_file:
+#         search_content = search_file.read()
+
+#     # Parse the HTML content using Beautiful Soup
+#     base_soup = BeautifulSoup(base_content, 'html.parser')
+#     search_soup = BeautifulSoup(search_content, 'html.parser')
+
+#     # Find the location in base.html where you want to insert movie_search.html content
+#     content_div = base_soup.find('div', {'id': 'content'})
+#     if content_div:
+#         # Insert the content from movie_search.html into base.html
+#         content_div.append(search_soup.body.contents)
+
+#     # Write the combined content to the output file
+#     with open(output_path, 'w', encoding='utf-8') as output_file:
+#         output_file.write(str(base_soup))

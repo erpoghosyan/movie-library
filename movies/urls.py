@@ -9,6 +9,7 @@ from .views import (HomePageView,
                     CommentDeleteView,
                     CommentUpdateView,
                     MovieLikeView,
+                    MovieSearchView
                     )
 urlpatterns = [
     path("home/", HomePageView.as_view(), name="home"),
@@ -26,6 +27,7 @@ urlpatterns = [
     path("<int:pk>/delete/comment/", CommentDeleteView.as_view(),
         name="comment_delete"),
     path("<int:pk>/edit/comment/", CommentUpdateView.as_view(),
-        name="comment_edit")
+        name="comment_edit"),
+    path('search/', MovieSearchView.as_view(), name='movie_search'),
  ]
 

@@ -16,6 +16,11 @@
                 <a class="navbar-brand" href="{% url 'movie_list' %}">Git For Films</a>
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center
               mb-md-0">
+              <form action="{% url 'movie_search' %}" method="get">
+                {% csrf_token %}
+                <input type="text" name="q" placeholder="Search Movie">
+                <button type="submit" >Search</button>
+              </form>
 
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'movie_new' %}" class="nav-link px-2 link-dark">+ New</a></li> </ul>

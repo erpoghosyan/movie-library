@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Search Results for "{{ query }}"</h2>
+  {% if movies %}
+    <ul>
+      {% for movie in movies %}
+        <li>{{ movie.title }}</li>
+        <a href="{% url 'movie_detail' pk=movie.id %}">Movie Detail</a>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No results found.</p>
+  {% endif %}
+  <p>Back to <a href="{% url 'movie_list' %}">All Movies</a>.</p>
+{% endblock %}
