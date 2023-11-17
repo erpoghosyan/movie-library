@@ -61,21 +61,32 @@ class CommentPost(SingleObjectMixin, FormView):
 class CommentDeleteView(DeleteView):
     model = Comment
     template_name = "comment_delete.html"
+    movie_detail = Movie
 
     def get_success_url(self):
         movie_pk = self.get_object().movie.pk
         return reverse_lazy("movie_detail", kwargs={'pk': movie_pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['movie'] = self.get_object().movie
+        return context
+    
 
 
 class CommentUpdateView(UpdateView):
     model = Comment
-    fields = (
-        "comment",)
+    fields = ("comment",)
     template_name = "comment_edit.html"
 
     def get_success_url(self):
         movie_pk = self.get_object().movie.pk
         return reverse_lazy("movie_detail", kwargs={'pk': movie_pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['movie'] = self.get_object().movie
+        return context
 
 
 class MovieDetailView(View):

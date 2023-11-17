@@ -6,6 +6,7 @@
     <form action="" method="post">{% csrf_token %}
         {{ form|crispy }}
         <p>Are you sure you want to delete "{{ comment.comment }}"?</p>
+        <a class="btn btn-primary ml-2" type="submit" href="{% url 'movie_detail' movie.pk %}">Cancel</a>
         <button class="btn btn-danger ml-2" type="submit">Confirm</button>
     </form>
     
