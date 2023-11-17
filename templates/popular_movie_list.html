@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Popular Movies{% endblock title %}
+
+{% block content %}
+    {% for movie in movie_list %}
+        {% csrf_token %}
+        {% if  movie.likes.count >= 2 %}
+        <a href="{% url 'movie_detail' movie.pk %}" disabled="true">
+            <div class="card">
+                <div class="card-header">
+                    <span class="font-weight-bold">{{ movie.title }}</span> &middot;
+                    <span class="text-muted">by {{ movie.author }} |
+                        {{ movie.date }}</span>
+                </div>
+                <div class="card-body">
+                    {{ movie.body }} </div>
+            </div>
+        </a>
+        <br/>
+        {% endif %}
+    {% endfor %}
+{% endblock content %}

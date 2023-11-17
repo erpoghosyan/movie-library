@@ -10,6 +10,7 @@ from .views import (HomePageView,
                     CommentUpdateView,
                     MovieLikeView,
                     MovieSearchView,
+                    PopularMovieListView
                     )
 urlpatterns = [
     path("home/", HomePageView.as_view(), name="home"),
@@ -29,5 +30,6 @@ urlpatterns = [
     path("<int:pk>/edit/comment/", CommentUpdateView.as_view(),
         name="comment_edit"),
     path('search/', MovieSearchView.as_view(), name='movie_search'),
+    path('popular/', PopularMovieListView.as_view(), name='popular_movie_list'),
     ]
 

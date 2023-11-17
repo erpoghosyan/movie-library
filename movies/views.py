@@ -13,6 +13,7 @@ from django.views import View
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
+from django.db.models import Count
 
 
 
@@ -115,6 +116,10 @@ class MovieListView(ListView):
     template_name = "movie_list.html"
     ordering = "-date"
 
+class PopularMovieListView(ListView):
+    model = Movie
+    template_name = "popular_movie_list.html"
+    ordering = "-date"
 
 class MovieUpdateView(UpdateView):
     model = Movie
