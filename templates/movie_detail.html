@@ -5,6 +5,7 @@
         <h2>{{ object.title }}</h2>
         <p>by {{ object.author }} | {{ object.date }}</p>
         <p>{{ object.body }}</p>
+        <p>{{ object.genre }}</p>
 
 
         {% if user.is_authenticated and user == object.author %}

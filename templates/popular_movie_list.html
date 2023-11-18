@@ -11,10 +11,12 @@
                 <div class="card-header">
                     <span class="font-weight-bold">{{ movie.title }}</span> &middot;
                     <span class="text-muted">by {{ movie.author }} |
-                        {{ movie.date }}</span>
+                        {{ movie.date }}</span> &middot;
                 </div>
                 <div class="card-body">
                     {{ movie.body }} </div>
+                <div class="card-body">
+                        {{ movie.genre }} </div>
             </div>
         </a>
         <br/>

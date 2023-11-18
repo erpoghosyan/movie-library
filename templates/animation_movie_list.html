@@ -1,22 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}Movies{% endblock title %}
+{% block title %}Animation Movies{% endblock title %}
 
 {% block content %}
     {% for movie in movie_list %}
+    {% if  "animation" in movie.genre.casefold %}
         <a href="{% url 'movie_detail' movie.pk %}" disabled="true">
             <div class="card">
                 <div class="card-header">
                     <span class="font-weight-bold">{{ movie.title }}</span> &middot;
                     <span class="text-muted">by {{ movie.author }} |
-                        {{ movie.date }}</span>
+                        {{ movie.date }}</span> &middot;
                 </div>
                 <div class="card-body">
                     {{ movie.body }} </div>
                 <div class="card-body">
-                    {{ movie.genre }} </div>
+                        {{ movie.genre }} </div>
             </div>
         </a>
         <br/>
+        {% endif %}
     {% endfor %}
 {% endblock content %}

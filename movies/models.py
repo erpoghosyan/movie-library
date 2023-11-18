@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 class Movie(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
+    genre = models.CharField(max_length=255, default="null")
+    kinopoisk_url = models.URLField(default='https://example.com')
     date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,

@@ -13,9 +13,23 @@ from django.views import View
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
-from django.db.models import Count
+from .utils import fetch_kinopoisk_data
+import requests
 
 
+
+def movie_list(request):
+    movie_titles = ['Movie 1', 'Movie 2', 'Movie 3']
+
+    for title in movie_titles:
+        kinopoisk_data = fetch_kinopoisk_data(title)
+        if kinopoisk_data:
+            Movie.objects.create(
+                title=title,
+                kinopoisk_url=kinopoisk_data['url'],
+            )
+    movies = Movie.objects.all()
+    return render(request, 'movie_kinopoisk_list.html', {'movies': movies})
 
 class HomePageView(TemplateView):
     template_name = "home.html"
@@ -116,6 +130,86 @@ class MovieListView(ListView):
     template_name = "movie_list.html"
     ordering = "-date"
 
+class ComedyMovieListView(ListView):
+    model = Movie
+    template_name = "comedy_movie_list.html"
+    ordering = "-date"
+
+class SportMovieListView(ListView):
+    model = Movie
+    template_name = "sport_movie_list.html"
+    ordering = "-date"
+
+class ActionMovieListView(ListView):
+    model = Movie
+    template_name = "action_movie_list.html"
+    ordering = "-date"
+
+class AnimationMovieListView(ListView):
+    model = Movie
+    template_name = "animation_movie_list.html"
+    ordering = "-date"
+
+class BiographyMovieListView(ListView):
+    model = Movie
+    template_name = "biography_movie_list.html"
+    ordering = "-date"
+
+class DocumentaryMovieListView(ListView):
+    model = Movie
+    template_name = "documentary_movie_list.html"
+    ordering = "-date"
+
+class DramaMovieListView(ListView):
+    model = Movie
+    template_name = "drama_movie_list.html"
+    ordering = "-date"
+
+class FantasyMovieListView(ListView):
+    model = Movie
+    template_name = "fantasy_movie_list.html"
+    ordering = "-date"
+
+class HorrorMovieListView(ListView):
+    model = Movie
+    template_name = "horror_movie_list.html"
+    ordering = "-date"
+
+class MusicalMovieListView(ListView):
+    model = Movie
+    template_name = "musical_movie_list.html"
+    ordering = "-date"
+
+class MysteryMovieListView(ListView):
+    model = Movie
+    template_name = "mystery_movie_list.html"
+    ordering = "-date"
+
+class ScienceFictionMovieListView(ListView):
+    model = Movie
+    template_name = "science_movie_list.html"
+    ordering = "-date"
+
+class ThrillerMovieListView(ListView):
+    model = Movie
+    template_name = "thriller_movie_list.html"
+    ordering = "-date"
+
+class RomanceMovieListView(ListView):
+    model = Movie
+    template_name = "romance_movie_list.html"
+    ordering = "-date"
+
+class WarMovieListView(ListView):
+    model = Movie
+    template_name = "war_movie_list.html"
+    ordering = "-date"
+
+class WesternMovieListView(ListView):
+    model = Movie
+    template_name = "western_movie_list.html"
+    ordering = "-date"
+
 class PopularMovieListView(ListView):
     model = Movie
     template_name = "popular_movie_list.html"
@@ -125,7 +219,8 @@ class MovieUpdateView(UpdateView):
     model = Movie
     fields = (
         "title",
-        "body",)
+        "body",
+        "genre",)
     template_name = "movie_edit.html"
 
 
@@ -141,6 +236,7 @@ class MovieCreateView(CreateView):
     fields = (
         "title",
         "body",
+        "genre",
     )
 
     def form_valid(self, form):
@@ -171,7 +267,23 @@ class MovieSearchView(ListView):
     
     def get_queryset(self):
         query = self.request.GET.get('q')
-        return Movie.objects.filter(title__icontains=query).order_by('-date')
+        url = "https://movie-database-alternative.p.rapidapi.com/"
+        api_url = 'https://movie-database-alternative.p.rapidapi.com/'
+
+        querystring = {"s": query, "r": "json", "page": "1"}
+        headers = {
+            "X-RapidAPI-Key": "081427815mshf6c0e29b9dd7964p1709b7jsn462710f9959e",
+            "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com"
+        }
+
+        response = requests.get(api_url, headers=headers, params=querystring)
+        
+        movie = response.json()
+        print(response.json(), 'response')
+        if response:
+            return movie
+        else:
+            return Movie.objects.filter(title__icontains=query).order_by('-date')
 
 
 

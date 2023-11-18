@@ -15,12 +15,49 @@
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a class="navbar-brand" href="{% url 'movie_list' %}">Git For Films</a>
                 <a class="navbar-brand" href="{% url 'popular_movie_list' %}">Popular Films</a>
+                <a href="#" class="d-block navbar-brand text-decoration-none dropdown-toggle"
+                               id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Genres </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item" href="{% url 'sport_movie_list' %}">
+                        Action</a>
+                    <li><a class="dropdown-item" href="{% url 'animation_movie_list' %}">
+                        Animation</a>
+                    <li><a class="dropdown-item" href="{% url 'biography_movie_list' %}">
+                        Biography</a>
+                    <li><a class="dropdown-item" href="{% url 'comedy_movie_list' %}">
+                        Comedy</a></li>
+                    <li><a class="dropdown-item" href="{% url 'documentary_movie_list' %}">
+                        Documentary</a>
+                    <li><a class="dropdown-item" href="{% url 'drama_movie_list' %}">
+                        Drama</a>
+                    <li><a class="dropdown-item" href="{% url 'fantasy_movie_list' %}">
+                        Fantasy</a>
+                    <li><a class="dropdown-item" href="{% url 'horror_movie_list' %}">
+                        Horror</a>
+                    <li><a class="dropdown-item" href="{% url 'musical_movie_list' %}">
+                        Musical</a>
+                    <li><a class="dropdown-item" href="{% url 'mystery_movie_list' %}">
+                        Mystery</a>
+                    <li><a class="dropdown-item" href="{% url 'science_movie_list' %}">
+                        Science Fiction</a>
+                    <li><a class="dropdown-item" href="{% url 'sport_movie_list' %}">
+                        Sport</a></li>
+                    <li><a class="dropdown-item" href="{% url 'thriller_movie_list' %}">
+                        Thriller</a>
+                    <li><a class="dropdown-item" href="{% url 'romance_movie_list' %}">
+                        Romance</a>
+                    <li><a class="dropdown-item" href="{% url 'war_movie_list' %}">
+                        War</a>
+                    <li><a class="dropdown-item" href="{% url 'western_movie_list' %}">
+                        Western</a>
+                    </ul>
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center
               mb-md-0">
               <form action="{% url 'movie_search' %}" method="get">
                 {% csrf_token %}
                 <input type="text" name="q" placeholder="Search Movie">
-                <button type="submit" >Search</button>
+                <button type="submit">Search</button>
               </form>
 
                     {% if user.is_authenticated %}
