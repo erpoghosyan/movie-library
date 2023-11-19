@@ -8,6 +8,7 @@ class MovieAdmin(admin.ModelAdmin):
      inlines = [
         CommentInline,
     ]
+  
 admin.site.register(Movie, MovieAdmin)
 admin.site.register(Comment)
 

@@ -15,6 +15,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from .utils import fetch_kinopoisk_data
 import requests
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 
@@ -129,7 +130,7 @@ class MovieListView(ListView):
     model = Movie
     template_name = "movie_list.html"
     ordering = "-date"
-
+    
 class ComedyMovieListView(ListView):
     model = Movie
     template_name = "comedy_movie_list.html"
@@ -220,7 +221,9 @@ class MovieUpdateView(UpdateView):
     fields = (
         "title",
         "body",
-        "genre",)
+        "genre",
+        "actors",
+        )
     template_name = "movie_edit.html"
 
 
@@ -237,6 +240,7 @@ class MovieCreateView(CreateView):
         "title",
         "body",
         "genre",
+        "actors",
     )
 
     def form_valid(self, form):

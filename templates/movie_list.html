@@ -11,12 +11,23 @@
                     <span class="text-muted">by {{ movie.author }} |
                         {{ movie.date }}</span>
                 </div>
+            {% if movie.actors != "" %}
+                <div class="card-body">
+                    {{ movie.body }} </div>
+                    <div class="card-body">
+                        ---------------- </div>
+                    <div class="card-body">
+                        {{ movie.actors }} </div>
+                <div class="card-body">
+                    {{ movie.genre }} </div>
+                {% else %}
                 <div class="card-body">
                     {{ movie.body }} </div>
                 <div class="card-body">
                     {{ movie.genre }} </div>
+                {% endif %}
             </div>
         </a>
         <br/>
-    {% endfor %}
+        {% endfor %}
 {% endblock content %}
