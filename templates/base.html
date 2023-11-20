@@ -19,7 +19,7 @@
                                id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                 Genres </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                    <li><a class="dropdown-item" href="{% url 'sport_movie_list' %}">
+                    <li><a class="dropdown-item" href="{% url 'action_movie_list' %}">
                         Action</a>
                     <li><a class="dropdown-item" href="{% url 'animation_movie_list' %}">
                         Animation</a>
@@ -61,12 +61,13 @@
               </form>
 
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'movie_new' %}" class="nav-link px-2 link-dark">+ New</a></li> </ul>
+                        
                         <div class="dropdown text-end">
                             <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
                                id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ user.username }} </a>
                             <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                                <li><a href="{% url 'movie_new' %}" class="nav-link px-2 link-dark">+ New</a></li> 
                                 <li><a class="dropdown-item" href="{% url 'password_change' %}">
                                     Change password</a></li>
                                 <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
